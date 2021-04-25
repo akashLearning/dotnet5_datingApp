@@ -45,7 +45,7 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _context.AppUsers.SingleOrDefaultAsync(u => u.UserName == loginDto.Username);
             if (user == null)
@@ -61,7 +61,12 @@ namespace API.Controllers
                     return Unauthorized("Invalid password");
                 }
             }
-            return user;
+            var userDto = new UserDto()
+            {
+                Username = user.UserName,
+                JWTToken = _tokenService.CreateJWTToken(user)
+            };
+            return userDto;
         }
 
         private async Task<bool> UserExists(string username)

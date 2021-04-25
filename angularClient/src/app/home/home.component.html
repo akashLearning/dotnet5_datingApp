@@ -1,0 +1,13 @@
+<div class="container-fluid mt-5 w-100">
+    <div *ngIf="!showRegisterForm" class="text-center pt-5">
+        <h1> Welcome to Dating App </h1>
+        <p class="lead">Come on join the worlds smallest community and get started with dating...!</p>
+        <div>
+            <button (click)="toggleRegisterForm()" class="btn btn-primary mr-2">Register</button>
+            <button class="btn btn-info mr-2">Learn more</button>
+        </div>
+    </div>
+    <div *ngIf="showRegisterForm" class="justify-content-center pt-3">
+        <app-register (cancelled)="showRegisterForm = $event"></app-register>
+    </div>
+</div>
